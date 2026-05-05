@@ -1,0 +1,200 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Clean White Base with Soft Teal Accents */
+  --background: #fafcfc;
+  --foreground: #1a2e35;
+  --card: #ffffff;
+  --card-foreground: #1a2e35;
+  --popover: #ffffff;
+  --popover-foreground: #1a2e35;
+  --primary: #3d9e8f;
+  --primary-foreground: #ffffff;
+  --secondary: #f0f7f6;
+  --secondary-foreground: #2a4a52;
+  --muted: #f4f8f7;
+  --muted-foreground: #5a7a82;
+  --accent: #3d9e8f;
+  --accent-foreground: #ffffff;
+  --destructive: #e85a5a;
+  --destructive-foreground: #ffffff;
+  --border: #e2edeb;
+  --input: #f0f7f6;
+  --ring: #3d9e8f;
+  
+  /* Custom palette for MBTI Guardian */
+  --teal: #3d9e8f;
+  --teal-light: #e8f5f3;
+  --teal-muted: #a8d5cf;
+  --blue: #4a8ab8;
+  --blue-light: #e8f2f8;
+  --purple: #7c6aa8;
+  --purple-light: #f0ecf6;
+  --green: #5a9e6f;
+  --green-light: #eaf5ed;
+  --amber: #c99a4a;
+  --amber-light: #faf5eb;
+  --pink: #d47a8a;
+  --pink-light: #fbeef0;
+  
+  --chart-1: var(--teal);
+  --chart-2: var(--purple);
+  --chart-3: var(--blue);
+  --chart-4: var(--green);
+  --chart-5: var(--amber);
+  --radius: 1rem;
+}
+
+@theme inline {
+  --font-sans: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-teal: var(--teal);
+  --color-teal-light: var(--teal-light);
+  --color-teal-muted: var(--teal-muted);
+  --color-blue: var(--blue);
+  --color-blue-light: var(--blue-light);
+  --color-purple: var(--purple);
+  --color-purple-light: var(--purple-light);
+  --color-green: var(--green);
+  --color-green-light: var(--green-light);
+  --color-amber: var(--amber);
+  --color-amber-light: var(--amber-light);
+  --color-pink: var(--pink);
+  --color-pink-light: var(--pink-light);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 8px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: #fafcfc;
+  }
+  html {
+    background-color: #fafcfc;
+  }
+}
+
+/* Playful animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: translateX(0px) rotate(0deg); }
+  25% { transform: translateX(5px) rotate(1deg); }
+  75% { transform: translateX(-5px) rotate(-1deg); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes shield-glow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(61, 158, 143, 0.2)); }
+  50% { filter: drop-shadow(0 0 16px rgba(61, 158, 143, 0.4)); }
+}
+
+@keyframes gentle-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0.8); opacity: 0.6; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 4s ease-in-out infinite 1s;
+}
+
+.animate-sway {
+  animation: sway 6s ease-in-out infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 4s ease-in-out infinite;
+}
+
+.animate-shield-glow {
+  animation: shield-glow 3s ease-in-out infinite;
+}
+
+.animate-gentle-spin {
+  animation: gentle-spin 30s linear infinite;
+}
+
+.animate-ripple {
+  animation: ripple 3s ease-out infinite;
+}
+
+/* Soft organic blob shapes */
+.blob-1 {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.blob-2 {
+  border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%;
+}
+
+.blob-3 {
+  border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(61, 158, 143, 0.12);
+}
