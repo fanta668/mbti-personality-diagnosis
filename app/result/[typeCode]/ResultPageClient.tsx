@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useParams } from "next/navigation"
 import { motion } from "framer-motion"
 import { AnimatedRadarChart } from "@/components/animated-radar-chart"
@@ -209,6 +210,14 @@ export default function ResultPageClient() {
               <br />
               結果はあくまで参考としてご活用ください。
             </p>
+            <div className="mt-4 flex justify-center gap-6">
+              <Link href="/" className="text-xs text-muted-foreground/50 hover:text-muted-foreground hover:underline">
+                トップへ戻る
+              </Link>
+              <Link href="/privacy" className="text-xs text-muted-foreground/50 hover:text-muted-foreground hover:underline">
+                プライバシーポリシー
+              </Link>
+            </div>
           </motion.footer>
         </div>
       </main>

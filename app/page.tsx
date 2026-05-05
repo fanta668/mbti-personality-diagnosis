@@ -112,6 +112,13 @@ export default function TopPage() {
             ※ 本診断は娯楽・自己啓発を目的としたものです。医療・心理的診断ではありません。
           </p>
         </motion.div>
+
+        {/* フッター */}
+        <footer className="mt-16 pt-6 border-t border-slate-200 text-center">
+          <Link href="/privacy" className="text-xs text-slate-400 hover:text-slate-600 hover:underline">
+            プライバシーポリシー
+          </Link>
+        </footer>
       </main>
     </div>
   )
