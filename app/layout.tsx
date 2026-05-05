@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     title: '職場パーソナリティ診断 — 64タイプで本当の自分を知ろう',
     description:
       'MBTIをベースに職場での強み・弱み・適職を診断。開花型か抑圧型かもわかる。無料・約5分。',
-    site: '@mbti_shokuba',
+    site: '@ShanTai45129',
   },
   alternates: {
     canonical: siteUrl,
