@@ -64,6 +64,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" style={{ backgroundColor: '#fafcfc' }}>
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3784046816126575"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="font-sans antialiased" style={{ backgroundColor: '#fafcfc' }}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
