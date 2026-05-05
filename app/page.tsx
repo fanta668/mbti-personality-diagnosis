@@ -57,15 +57,14 @@ export default function TopPage() {
           </p>
 
           {/* CTAボタン */}
-          <Link href="/quiz">
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-block px-10 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg font-bold shadow-lg shadow-indigo-200 cursor-pointer hover:shadow-xl transition-shadow"
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="inline-block">
+            <Link
+              href="/quiz"
+              className="inline-block px-10 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg font-bold shadow-lg shadow-indigo-200 hover:shadow-xl transition-shadow"
             >
               診断スタート（全60問・約5分）
-            </motion.div>
-          </Link>
+            </Link>
+          </motion.div>
 
           <p className="text-xs text-slate-400 mt-3">
             無料 · 登録不要 · 結果はすぐ表示
@@ -101,15 +100,14 @@ export default function TopPage() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mt-14"
         >
-          <Link href="/quiz">
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-block px-10 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg font-bold shadow-lg shadow-indigo-200 cursor-pointer"
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="inline-block">
+            <Link
+              href="/quiz"
+              className="inline-block px-10 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-lg font-bold shadow-lg shadow-indigo-200"
             >
               今すぐ診断してみる →
-            </motion.div>
-          </Link>
+            </Link>
+          </motion.div>
           <p className="text-xs text-slate-400 mt-3">
             ※ 本診断は娯楽・自己啓発を目的としたものです。医療・心理的診断ではありません。
           </p>

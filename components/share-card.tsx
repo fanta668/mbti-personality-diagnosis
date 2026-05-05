@@ -22,11 +22,15 @@ export function ShareCard({
 }: ShareCardProps) {
   const [copied, setCopied] = useState(false)
 
-  const shareText = `職場パーソナリティ診断やってみた 🌿
-結果は「${typeName}」(${typeCode} ${subType})
-全体の${rarity}という希少タイプでした。
-「${catchphrase}」
-#職場パーソナリティ診断`
+  const shareText = `職場パーソナリティ診断やってみた！
+
+結果👉「${typeName}」(${typeCode} · ${subType})
+全体の${rarity}しかいない希少タイプ✨
+
+"${catchphrase}"
+
+あなたのタイプは？↓
+#職場パーソナリティ診断 #MBTI`
 
   const shareUrl = typeof window !== "undefined" ? window.location.href : ""
 
