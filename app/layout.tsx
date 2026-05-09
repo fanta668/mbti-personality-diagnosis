@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: `${siteUrl}/og-image.png`,
+        url: `${siteUrl}/og-image.png?v=2`,
         width: 1200,
         height: 630,
         alt: '職場パーソナリティ診断 — 64タイプで本当の自分を知ろう',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     description:
       'MBTIをベースに職場での強み・弱み・適職を診断。開花型か抑圧型かもわかる。無料・約5分。',
     site: '@ShanTai45129',
-    images: [`${siteUrl}/og-image.png`],
+    images: [`${siteUrl}/og-image.png?v=2`],
   },
   alternates: {
     canonical: siteUrl,
