@@ -25,6 +25,14 @@ export const metadata: Metadata = {
     siteName: '職場パーソナリティ診断',
     locale: 'ja_JP',
     type: 'website',
+    images: [
+      {
+        url: `${siteUrl}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: '職場パーソナリティ診断 — 64タイプで本当の自分を知ろう',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -32,6 +40,7 @@ export const metadata: Metadata = {
     description:
       'MBTIをベースに職場での強み・弱み・適職を診断。開花型か抑圧型かもわかる。無料・約5分。',
     site: '@ShanTai45129',
+    images: [`${siteUrl}/og-image.png`],
   },
   alternates: {
     canonical: siteUrl,
