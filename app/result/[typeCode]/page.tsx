@@ -35,12 +35,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: '職場パーソナリティ診断',
       locale: 'ja_JP',
       type: 'website',
+      images: [
+        {
+          url: `${siteUrl}/og-image-v2.png`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      site: '@mbti_shokuba',
+      site: '@ShanTai45129',
+      images: [`${siteUrl}/og-image-v2.png`],
     },
     alternates: {
       canonical: pageUrl,
