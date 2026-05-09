@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import Script from 'next/script'
 import './globals.css'
 
 const _geist = Geist({ subsets: ['latin'] })
@@ -73,16 +74,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" style={{ backgroundColor: '#fafcfc' }}>
-      <head>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3784046816126575"
-          crossOrigin="anonymous"
-        />
-      </head>
       <body className="font-sans antialiased" style={{ backgroundColor: '#fafcfc' }}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3784046816126575"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
