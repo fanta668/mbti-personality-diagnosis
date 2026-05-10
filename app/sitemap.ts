@@ -9,7 +9,7 @@ const MBTI_TYPES = [
   'ESTJ', 'ESFJ', 'ENFJ', 'ENTJ',
 ]
 const VARIANTS = ['-A', '-T']
-const SUBTYPES = ['開花型', '抑圧型']
+const SUBTYPES = ['bloom', 'suppress']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
@@ -27,15 +27,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // 64タイプ分の結果ページ
+  // 64タイプ分の結果ページ（例: /result/ISFJ-T_bloom）
   const resultPages: MetadataRoute.Sitemap = []
   for (const mbti of MBTI_TYPES) {
     for (const variant of VARIANTS) {
       for (const subtype of SUBTYPES) {
         const typeCode = `${mbti}${variant}`
-        const slug = encodeURIComponent(`${typeCode}_${subtype}`)
         resultPages.push({
-          url: `${siteUrl}/result/${slug}`,
+          url: `${siteUrl}/result/${typeCode}_${subtype}`,
           lastModified: new Date(),
           changeFrequency: 'monthly',
           priority: 0.7,

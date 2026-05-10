@@ -1,7 +1,7 @@
 // =================================================================
 // calcType.ts — 診断スコア計算ロジック
 // 60問の回答（1〜5）から typeCode を算出する
-// 例: 'ISFJ-T_開花型'
+// 例: 'ISFJ-T_bloom'
 // =================================================================
 
 import { QUESTIONS } from '@/data/questions'
@@ -56,7 +56,7 @@ function calcAxisScores(answers: Answers): AxisScore {
 
 /**
  * 回答データから typeCode を算出する
- * 返り値例: 'ISFJ-T_開花型'
+ * 返り値例: 'ISFJ-T_bloom'
  */
 export function calcTypeCode(answers: Answers): string {
   const scores = calcAxisScores(answers)
@@ -66,7 +66,7 @@ export function calcTypeCode(answers: Answers): string {
   const T_or_F = scores.TF >= 0 ? 'T' : 'F'
   const J_or_P = scores.JP >= 0 ? 'J' : 'P'
   const A_or_T = scores.AT >= 0 ? '-A' : '-T'
-  const bloom_or_suppress = scores.bloom >= 0 ? '開花型' : '抑圧型'
+  const bloom_or_suppress = scores.bloom >= 0 ? 'bloom' : 'suppress'
 
   const mbti = `${E_or_I}${S_or_N}${T_or_F}${J_or_P}${A_or_T}`
   return `${mbti}_${bloom_or_suppress}`

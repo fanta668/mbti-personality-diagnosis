@@ -10,7 +10,9 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { typeCode: rawParam } = await params
   const raw = decodeURIComponent(rawParam)
-  const [typeCode, subType] = raw.split('_')
+  const [typeCode, subTypeSlug] = raw.split('_')
+  // 英語スラグ → 日本語表示名に変換（getPersonalityData のキーに合わせる）
+  const subType = subTypeSlug === 'bloom' ? '開花型' : subTypeSlug === 'suppress' ? '抑圧型' : subTypeSlug
   const data = getPersonalityData(typeCode, subType)
 
   if (!data) {
@@ -48,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      site: '@ShanTai45129',
+      site: '@64types_mbti',
       images: [`${siteUrl}/og-image-v2.png`],
     },
     alternates: {

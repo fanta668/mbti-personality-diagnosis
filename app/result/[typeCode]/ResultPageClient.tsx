@@ -16,9 +16,12 @@ import { Card } from "@/components/ui/card"
 export default function ResultPageClient() {
   const params = useParams()
 
-  // URLは /result/ISFJ-T_開花型 の形式
+  // URLは /result/ISFJ-T_bloom または /result/ISFJ-T_suppress の形式
   const raw = decodeURIComponent(params.typeCode as string)
-  const [typeCode, subType] = raw.split('_')
+  const [typeCode, subTypeSlug] = raw.split('_')
+
+  // 英語スラグ → 日本語表示名に変換（getPersonalityData のキーに合わせる）
+  const subType = subTypeSlug === 'bloom' ? '開花型' : subTypeSlug === 'suppress' ? '抑圧型' : subTypeSlug
 
   const data = getPersonalityData(typeCode, subType)
 

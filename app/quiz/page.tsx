@@ -47,8 +47,9 @@ export default function QuizPage() {
       setCurrentPage(prev => prev + 1)
     } else {
       // 最終ページ → 結果計算 → リダイレクト
+      // calcTypeCode は 'ISFJ-T_bloom' 形式を返す（英数字のみなのでそのままURLに使用可）
       const typeCode = calcTypeCode(answers)
-      router.push(`/result/${encodeURIComponent(typeCode)}`)
+      router.push(`/result/${typeCode}`)
     }
   }
 
