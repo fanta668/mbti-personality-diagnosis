@@ -3,7 +3,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { QUESTIONS, QUESTIONS_PER_PAGE, TOTAL_PAGES } from '@/data/questions'
-import { calcTypeCode, Answers } from '@/lib/calcType'
+import { calcTypeCode, encodeAxisPercents, Answers } from '@/lib/calcType'
+
+// 回答の途中保存に使う localStorage キー
+const STORAGE_KEY = 'wpq_quiz_progress_v1'
 
 const SCALE_LABELS = [
   { value: 1, label: 'まったく\nそう思わない' },
@@ -17,7 +20,33 @@ export default function QuizPage() {
   const router = useRouter()
   const [currentPage, setCurrentPage] = useState(0) // 0-indexed
   const [answers, setAnswers] = useState<Answers>({})
+  const [restored, setRestored] = useState(false) // 復元処理が済んだか
   const topRef = useRef<HTMLDivElement>(null)
+
+  // ── マウント時に途中保存を復元 ──────────────────
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      if (saved) {
+        const { answers: a, currentPage: p } = JSON.parse(saved)
+        if (a && typeof a === 'object') setAnswers(a)
+        if (Number.isInteger(p) && p >= 0 && p < TOTAL_PAGES) setCurrentPage(p)
+      }
+    } catch {
+      // 壊れたデータは無視して最初から
+    }
+    setRestored(true)
+  }, [])
+
+  // ── 回答・ページが変わるたびに自動保存 ──────────
+  useEffect(() => {
+    if (!restored) return
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ answers, currentPage }))
+    } catch {
+      // 保存できない環境（プライベートモード等）では何もしない
+    }
+  }, [answers, currentPage, restored])
 
   const pageQuestions = QUESTIONS.slice(
     currentPage * QUESTIONS_PER_PAGE,
@@ -49,8 +78,18 @@ export default function QuizPage() {
       // 最終ページ → 結果計算 → リダイレクト
       // calcTypeCode は 'ISFJ-T_bloom' 形式を返す（英数字のみなのでそのままURLに使用可）
       const typeCode = calcTypeCode(answers)
-      router.push(`/result/${typeCode}`)
+      // 6軸の実測スコアをクエリで結果ページへ渡す（チャート表示用）
+      const percents = encodeAxisPercents(answers)
+      // 診断完了 → 途中保存をクリア
+      try {
+        localStorage.removeItem(STORAGE_KEY)
+      } catch {}
+      router.push(`/result/${typeCode}?p=${percents}`)
     }
+  }
+
+  function handlePrev() {
+    if (currentPage > 0) setCurrentPage(prev => prev - 1)
   }
 
   const isLastPage = currentPage === TOTAL_PAGES - 1
@@ -170,6 +209,14 @@ export default function QuizPage() {
             <p className="text-center text-xs text-slate-400 mt-2">
               このページの全問に回答すると次へ進めます
             </p>
+          )}
+          {currentPage > 0 && (
+            <button
+              onClick={handlePrev}
+              className="w-full mt-3 py-3 rounded-2xl font-medium text-sm text-slate-500 border border-slate-200 bg-white hover:bg-slate-50 hover:text-slate-700 transition-all duration-200"
+            >
+              ← 前のページへ戻る（回答は保存されています）
+            </button>
           )}
         </div>
       </div>

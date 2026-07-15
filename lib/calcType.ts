@@ -95,3 +95,34 @@ export function calcAxisPercents(answers: Answers): Record<string, number> {
     suppress: toPercent(-scores.bloom),
   }
 }
+
+// =================================================================
+// 6軸スコアのURL受け渡し（結果ページでチャートに実測値を出すため）
+// 形式: "E-S-T-J-A-bloom" 各0〜100の整数をハイフン区切り 例: "35-60-28-71-44-65"
+// =================================================================
+
+/** URLクエリに載せる6軸スコア（E,S,T,J,A,bloom 側の%） */
+export interface AxisPercents6 {
+  E: number
+  S: number
+  T: number
+  J: number
+  A: number
+  bloom: number
+}
+
+/** 回答から6軸スコアをURLパラメータ文字列にエンコードする */
+export function encodeAxisPercents(answers: Answers): string {
+  const p = calcAxisPercents(answers)
+  return [p.E, p.S, p.T, p.J, p.A, p.bloom].join('-')
+}
+
+/** URLパラメータ文字列を6軸スコアに復元する。不正な値なら null */
+export function decodeAxisPercents(param: string | null): AxisPercents6 | null {
+  if (!param) return null
+  const parts = param.split('-').map(Number)
+  if (parts.length !== 6) return null
+  if (parts.some(v => !Number.isInteger(v) || v < 0 || v > 100)) return null
+  const [E, S, T, J, A, bloom] = parts
+  return { E, S, T, J, A, bloom }
+}

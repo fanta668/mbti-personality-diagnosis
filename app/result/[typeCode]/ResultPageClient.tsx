@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { useParams } from "next/navigation"
+import { useParams, useSearchParams } from "next/navigation"
+import { decodeAxisPercents, AxisPercents6 } from "@/lib/calcType"
 import { motion } from "framer-motion"
 import { AnimatedRadarChart } from "@/components/animated-radar-chart"
 import { AnimatedScoreBar } from "@/components/animated-score-bar"
@@ -13,8 +14,44 @@ import { getBackgroundConfig } from "@/components/background-config"
 import { getPersonalityData } from "@/data/personality-data"
 import { Card } from "@/components/ui/card"
 
+// ── 実測6軸スコア → チャート用データへの変換 ──────────────
+// 各軸とも「優勢な側」のラベルと%を表示する（常に50%以上になる）
+function buildRealChartData(p: AxisPercents6) {
+  const axes = [
+    { pos: '外向型（E）', neg: '内向型（I）', theme: 'エネルギーの方向', value: p.E, color: '#8b5cf6' },
+    { pos: '現実型（S）', neg: '直観型（N）', theme: 'ものの見方', value: p.S, color: '#14b8a6' },
+    { pos: '論理型（T）', neg: '感情型（F）', theme: '判断の基準', value: p.T, color: '#3b82f6' },
+    { pos: '計画型（J）', neg: '柔軟型（P）', theme: '物事の進め方', value: p.J, color: '#f59e0b' },
+    { pos: '自信型（A）', neg: '激動型（T）', theme: '心の安定度', value: p.A, color: '#ec4899' },
+    { pos: '開花型', neg: '抑圧型', theme: '本来の自分の発揮度', value: p.bloom, color: '#22c55e' },
+  ]
+
+  const scoreData = axes.map(a => {
+    const dominant = a.value >= 50
+    return {
+      label: dominant ? a.pos : a.neg,
+      description: `${a.theme}：${a.pos} ${a.value}% ／ ${a.neg} ${100 - a.value}%`,
+      value: dominant ? a.value : 100 - a.value,
+      color: a.color,
+    }
+  })
+
+  const radarData = scoreData.map(s => ({
+    axis: s.label.replace(/（.+）/, ''), // レーダーはラベル短縮
+    value: s.value,
+    fullMark: 100,
+  }))
+
+  return { scoreData, radarData }
+}
+
 export default function ResultPageClient() {
   const params = useParams()
+  const searchParams = useSearchParams()
+
+  // 診断直後は ?p= に実測6軸スコアが入っている（シェアされたURLには無い）
+  const realPercents = decodeAxisPercents(searchParams.get('p'))
+  const realChart = realPercents ? buildRealChartData(realPercents) : null
 
   // URLは /result/ISFJ-T_bloom または /result/ISFJ-T_suppress の形式
   const raw = decodeURIComponent(params.typeCode as string)
@@ -67,12 +104,12 @@ export default function ResultPageClient() {
               <div className="grid md:grid-cols-[200px_1fr] gap-6 items-center">
                 <div className="flex flex-col items-center">
                   <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-2">
-                    4軸スコア分析
+                    {realChart ? 'あなたの回答による6軸スコア' : 'タイプ標準スコア'}
                   </p>
-                  <AnimatedRadarChart data={data.radarData} />
+                  <AnimatedRadarChart data={realChart ? realChart.radarData : data.radarData} />
                 </div>
                 <div className="space-y-4">
-                  {data.scoreData.map((score, index) => (
+                  {(realChart ? realChart.scoreData : data.scoreData).map((score, index) => (
                     <AnimatedScoreBar
                       key={score.label}
                       label={score.label}

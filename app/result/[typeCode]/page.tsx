@@ -1,4 +1,5 @@
 // サーバーコンポーネント — generateMetadata で動的OGPを生成
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import { getPersonalityData } from '@/data/personality-data'
 import ResultPageClient from './ResultPageClient'
@@ -60,5 +61,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function ResultPage() {
-  return <ResultPageClient />
+  // ResultPageClient が useSearchParams を使うため Suspense で包む（Next.js の要件）
+  return (
+    <Suspense>
+      <ResultPageClient />
+    </Suspense>
+  )
 }
